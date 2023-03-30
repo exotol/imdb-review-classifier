@@ -8,6 +8,8 @@ packages = [{include = "imdb_review_classifier"}]
 
 [tool.poetry.dependencies]
 python = "^3.9.13"
+dvc = "^2.51.0"
+kaggle = "^1.5.13"
 
 
 [build-system]

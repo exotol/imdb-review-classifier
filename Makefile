@@ -40,3 +40,10 @@ struct:
 	git add requirements/requirements.txt requirements/requirements-dev.txt; \
 	git add scripts/train.sh configs/baseline.yaml; \
 	git add .gitignore; \
+
+
+load:
+	@echo "Загрузить данные с каггла"
+	kaggle datasets download -d lakshmi25npathi/imdb-dataset-of-50k-movie-reviews -p data/raw; \
+	unzip data/raw/imdb-dataset-of-50k-movie-reviews.zip -d data/raw/; \
+	rm -rf data/raw/imdb-dataset-of-50k-movie-reviews.zip; \
