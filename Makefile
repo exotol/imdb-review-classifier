@@ -34,12 +34,15 @@ struct:
 	mkdir -p tests && touch tests/.gitkeep; \
 	mkdir -p configs && touch configs/baseline.yaml; \
 	mkdir -p scripts && touch scripts/train.sh; \
+	mkdir -p notebooks && touch notebooks/.gitkeep; \
 	touch .gitignore; \
+	git add notebooks/.gitkeep; \
 	git add data/raw/.gitkeep $(PROJECT)/__init__.py;\
 	git add docker/docker-compose.yaml tests/.gitkeep; \
 	git add requirements/requirements.txt requirements/requirements-dev.txt; \
 	git add scripts/train.sh configs/baseline.yaml; \
 	git add .gitignore; \
+	git commit -m "Создана структура проекта"
 
 
 load:
@@ -47,3 +50,7 @@ load:
 	kaggle datasets download -d lakshmi25npathi/imdb-dataset-of-50k-movie-reviews -p data/raw; \
 	unzip data/raw/imdb-dataset-of-50k-movie-reviews.zip -d data/raw/; \
 	rm -rf data/raw/imdb-dataset-of-50k-movie-reviews.zip; \
+
+jupyter:
+	@echo "Запустить Jupyter для исследований"
+	jupyter lab --port 9999
