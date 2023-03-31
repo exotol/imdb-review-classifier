@@ -54,3 +54,14 @@ load:
 jupyter:
 	@echo "Запустить Jupyter для исследований"
 	jupyter lab --port 9999
+
+stage_split:
+	@echo "Добавление разбиения данных"
+	dvc run --force -n data_split \
+		-d imdb_review_classifier/pipelines/data_split.py \
+		-d data/raw/imdb_dataset.csv \
+		-o data/split/train.csv \
+		-o data/split/test.csv \
+		-p data_split,base \
+			python imdb_review_classifier/pipelines/data_split.py \
+				--path_to_config=params.yaml

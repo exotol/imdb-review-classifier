@@ -1,0 +1,12 @@
+stages:
+  data_split:
+    cmd: python imdb_review_classifier/pipelines/data_split.py --path_to_config=params.yaml
+    deps:
+    - data/raw/imdb_dataset.csv
+    - imdb_review_classifier/pipelines/data_split.py
+    params:
+    - base
+    - data_split
+    outs:
+    - data/split/test.csv
+    - data/split/train.csv

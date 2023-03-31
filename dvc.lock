@@ -1,0 +1,27 @@
+schema: '2.0'
+stages:
+  data_split:
+    cmd: python imdb_review_classifier/pipelines/data_split.py --path_to_config=params.yaml
+    deps:
+    - path: data/raw/imdb_dataset.csv
+      md5: 308443a50e5c993e7b8a1cdb95750026
+      size: 66212309
+    - path: imdb_review_classifier/pipelines/data_split.py
+      md5: 79e564e72c33b8aa9f7e5f398383f30c
+      size: 1236
+    params:
+      params.yaml:
+        base:
+          seed: 100500
+        data_split:
+          raw_data: data/raw/imdb_dataset.csv
+          test_size: 0.2
+          train_path: data/split/train.csv
+          test_path: data/split/test.csv
+    outs:
+    - path: data/split/test.csv
+      md5: 4279918fa2315ab43852446f5b846215
+      size: 13193722
+    - path: data/split/train.csv
+      md5: e91174c30f08e589561364b57e63f404
+      size: 53018604

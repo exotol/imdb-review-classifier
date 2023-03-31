@@ -1,0 +1,8 @@
+base:
+  seed: 100500
+
+data_split:
+  raw_data: "data/raw/imdb_dataset.csv"
+  test_size: 0.2
+  train_path: "data/split/train.csv"
+  test_path: "data/split/test.csv"

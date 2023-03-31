@@ -21,12 +21,12 @@ make venv
 make poetry
 ```
 
-5. Инициализация poetry в проекте
+5. Инициализация poetry в проекте (выполнять только если нет pyproject.toml)
 ```bash
 poetry init
 ```
 
-6. Создание структуры проекта
+6. Создание структуры проекта (выполнять только если структуры еще нет)
 ```bash
 make struct 
 ```
@@ -36,3 +36,19 @@ make struct
 poetry add torch --platform linux --python 3.9.13
 ```
 
+Пример для click
+```python
+import click
+
+@click.command()
+@click.option('--count', default=1, help='Number of greetings.')
+@click.option('--name', prompt='Your name',
+              help='The person to greet.')
+def hello(count, name):
+    """Simple program that greets NAME for a total of COUNT times."""
+    for x in range(count):
+        click.echo(f"Hello {name}!")
+
+if __name__ == '__main__':
+    hello()
+```
