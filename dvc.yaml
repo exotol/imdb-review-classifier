@@ -10,3 +10,14 @@ stages:
     outs:
     - data/split/test.csv
     - data/split/train.csv
+  features:
+    cmd: python imdb_review_classifier/pipelines/featurize.py --path_to_config=params.yaml
+    deps:
+    - data/split/train.csv
+    - imdb_review_classifier/pipelines/featurize.py
+    params:
+    - data_split
+    - features
+    outs:
+    - data/features/train
+    - models/count_vectorizer

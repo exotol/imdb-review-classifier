@@ -35,8 +35,10 @@ struct:
 	mkdir -p configs && touch configs/baseline.yaml; \
 	mkdir -p scripts && touch scripts/train.sh; \
 	mkdir -p notebooks && touch notebooks/.gitkeep; \
+	mkdir -p models && touch models/.gitkeep; \
 	touch .gitignore; \
 	git add notebooks/.gitkeep; \
+	git add models/.gitkeep; \
 	git add data/raw/.gitkeep $(PROJECT)/__init__.py;\
 	git add docker/docker-compose.yaml tests/.gitkeep; \
 	git add requirements/requirements.txt requirements/requirements-dev.txt; \
@@ -65,3 +67,14 @@ stage_split:
 		-p data_split,base \
 			python imdb_review_classifier/pipelines/data_split.py \
 				--path_to_config=params.yaml
+
+stage_train_features:
+	@echo "Обучение добавление извлекателя признаков и сохранение трейна"
+	dvc run --force -n features \
+	-d imdb_review_classifier/pipelines/featurize.py \
+	-d data/split/train.csv \
+	-o data/features/train \
+	-o models/count_vectorizer \
+	-p data_split,features \
+		python imdb_review_classifier/pipelines/featurize.py \
+			--path_to_config=params.yaml
