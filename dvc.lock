@@ -25,3 +25,35 @@ stages:
     - path: data/split/train.csv
       md5: e91174c30f08e589561364b57e63f404
       size: 53018604
+  features:
+    cmd: python imdb_review_classifier/pipelines/featurize.py --path_to_config=params.yaml
+    deps:
+    - path: data/split/train.csv
+      md5: e91174c30f08e589561364b57e63f404
+      size: 53018604
+    - path: imdb_review_classifier/pipelines/featurize.py
+      md5: 0cce091f325df4291b428e360f260259
+      size: 1323
+    params:
+      params.yaml:
+        data_split:
+          raw_data: data/raw/imdb_dataset.csv
+          test_size: 0.2
+          train_path: data/split/train.csv
+          test_path: data/split/test.csv
+        features:
+          vectorizer:
+            analyzer: word
+            min_df: 3
+          save:
+            model_file_name: models/count_vectorizer
+            train_data_file: data/features/x_train
+            target_train_file: data/features/y_train
+            train_data: data/features/train
+    outs:
+    - path: data/features/train
+      md5: 9a9569ffbd3a5faea3f35357c6d2a6ee
+      size: 69368299
+    - path: models/count_vectorizer
+      md5: 03e36e9e7526a8b991b15a8ce06da6a7
+      size: 1760001
