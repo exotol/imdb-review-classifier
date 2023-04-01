@@ -133,8 +133,8 @@ stages:
       md5: 4279918fa2315ab43852446f5b846215
       size: 13193722
     - path: imdb_review_classifier/pipelines/evaluate.py
-      md5: 9e9f31ae015a2ec6f7e8f0006dfbafff
-      size: 1540
+      md5: 85256b75f53749cad74fb3c363c35462
+      size: 1533
     - path: models/count_vectorizer
       md5: 8d8edbaa77d3179b825580d2b03421ae
       size: 1760001

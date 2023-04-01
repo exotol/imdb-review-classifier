@@ -1,19 +1,26 @@
 stages:
 
   data_split:
-    cmd: python -m imdb_review_classifier.pipelines.data_split --path_to_config=configs/baseline.yaml
+    desc: Этап разбиения данных на train/test
+    cmd: >-
+      python -m imdb_review_classifier.pipelines.data_split 
+      --path_to_config=configs/baseline.yaml
     deps:
-    - data/raw/imdb_dataset.csv
-    - imdb_review_classifier/pipelines/data_split.py
+      - ${data_split.raw_data}
+#      - "data/raw/imdb_dataset.csv"
+      - imdb_review_classifier/pipelines/data_split.py
     params:
       - configs/baseline.yaml:
         - base
         - data_split
     outs:
-    - data/split/test.csv
-    - data/split/train.csv
+      - ${data_split.train_path}
+      - ${data_split.test_path}
+#    - data/split/test.csv
+#    - data/split/train.csv
 
   features:
+    desc: Этап генерации признаков или обучение векторизаторов/трансформаторов
     cmd: python -m imdb_review_classifier.pipelines.featurize --path_to_config=configs/baseline.yaml
     deps:
     - data/split/train.csv
@@ -27,6 +34,7 @@ stages:
     - models/count_vectorizer
 
   train:
+    desc: Этап тренировки моделей на train данных
     cmd: python -m imdb_review_classifier.pipelines.train --path_to_config=configs/baseline.yaml
     deps:
       - imdb_review_classifier/pipelines/train.py
@@ -40,6 +48,7 @@ stages:
       - models/lin_reg
 
   eval:
+    desc: Вычисление скоров
     cmd: python -m imdb_review_classifier.pipelines.evaluate --path_to_config=configs/baseline.yaml
     deps:
       - imdb_review_classifier/pipelines/evaluate.py
