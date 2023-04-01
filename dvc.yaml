@@ -1,23 +1,27 @@
 stages:
+
   data_split:
-    cmd: python imdb_review_classifier/pipelines/data_split.py --path_to_config=params.yaml
+    cmd: python imdb_review_classifier/pipelines/data_split.py --path_to_config=configs/baseline.yaml
     deps:
     - data/raw/imdb_dataset.csv
     - imdb_review_classifier/pipelines/data_split.py
     params:
-    - base
-    - data_split
+      - configs/baseline.yaml:
+        - base
+        - data_split
     outs:
     - data/split/test.csv
     - data/split/train.csv
+
   features:
-    cmd: python imdb_review_classifier/pipelines/featurize.py --path_to_config=params.yaml
+    cmd: python imdb_review_classifier/pipelines/featurize.py --path_to_config=configs/baseline.yaml
     deps:
     - data/split/train.csv
     - imdb_review_classifier/pipelines/featurize.py
     params:
-    - data_split
-    - features
+      - configs/baseline.yaml:
+        - data_split
+        - features
     outs:
     - data/features/train
     - models/count_vectorizer

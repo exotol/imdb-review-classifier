@@ -1,0 +1,19 @@
+base:
+  seed: 100500
+
+data_split:
+  raw_data: "data/raw/imdb_dataset.csv"
+  test_size: 0.2
+  train_path: "data/split/train.csv"
+  test_path: "data/split/test.csv"
+
+
+features:
+  vectorizer:
+    analyzer: 'word'
+    min_df: 3
+  save:
+    model_file_name: "models/count_vectorizer"
+    train_data_file: "data/features/x_train"
+    target_train_file: "data/features/y_train"
+    train_data: "data/features/train"
