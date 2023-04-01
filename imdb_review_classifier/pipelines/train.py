@@ -3,6 +3,7 @@ from typing import Any, Dict, Text
 import click
 import torch
 from sklearn import linear_model as lm
+
 from imdb_review_classifier.utils.load_helpers import load_params
 
 
@@ -16,9 +17,10 @@ def train_model(config: Dict[Text, Any]) -> None:
 
     model.fit(x_train, y_train)
 
-    torch.save({
-        config["train"]["save"]["model_path"]: model
-    }, config["train"]["save"]["model_path"])
+    torch.save(
+        {config["train"]["save"]["model_path"]: model},
+        config["train"]["save"]["model_path"],
+    )
 
 
 @click.command()

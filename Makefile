@@ -36,8 +36,9 @@ struct:
 	mkdir -p scripts && touch scripts/train.sh; \
 	mkdir -p notebooks && touch notebooks/.gitkeep; \
 	mkdir -p models && touch models/.gitkeep; \
+	mkdir -p report/metrics && touch report/metrics/.gitkeep; \
 	touch .gitignore; \
-	git add notebooks/.gitkeep; \
+	git add notebooks/.gitkeep report/metrics/.gitkeep; \
 	git add models/.gitkeep; \
 	git add data/raw/.gitkeep $(PROJECT)/__init__.py;\
 	git add docker/docker-compose.yaml tests/.gitkeep; \

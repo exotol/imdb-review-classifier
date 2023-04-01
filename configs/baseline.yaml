@@ -22,3 +22,9 @@ features:
 train:
   save:
     model_path: "models/lin_reg"
+
+
+evaluate:
+  save:
+    metrics_file: "report/metrics/metrics.json"
+    confusion_matrix: "report/metrics/cm.csv"

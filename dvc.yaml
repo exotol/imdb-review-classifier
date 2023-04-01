@@ -38,3 +38,20 @@ stages:
           - train
     outs:
       - models/lin_reg
+
+  evaluate:
+    cmd: python -m imdb_review_classifier.pipelines.evaluate --path_to_config=configs/baseline.yaml
+    deps:
+      - imdb_review_classifier/pipelines/evaluate.py
+      - "data/split/test.csv"
+      - "models/count_vectorizer"
+      - "models/lin_reg"
+    params:
+      - configs/baseline.yaml:
+          - features
+          - train
+          - evaluate
+    metrics:
+    - report/metrics/metrics.json
+    plots:
+    - report/metrics/cm.csv
