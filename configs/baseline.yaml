@@ -1,5 +1,5 @@
 base:
-  seed: 100500
+  random_state: 100500
 
 data_split:
   raw_data: "data/raw/imdb_dataset.csv"
@@ -17,3 +17,8 @@ features:
     train_data_file: "data/features/x_train"
     target_train_file: "data/features/y_train"
     train_data: "data/features/train"
+
+
+train:
+  save:
+    model_path: "models/lin_reg"
