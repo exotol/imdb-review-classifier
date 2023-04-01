@@ -64,8 +64,8 @@ stages:
       md5: 972d5e51884a564a513354d7a0718bb6
       size: 69608171
     - path: imdb_review_classifier/pipelines/train.py
-      md5: e4c6333bb0608be49996cb0eed140de8
-      size: 911
+      md5: 70773d694a09f63801bf029132de4e07
+      size: 921
     params:
       configs/baseline.yaml:
         base:
@@ -86,3 +86,43 @@ stages:
     - path: models/lin_reg
       md5: 72fe901758140993a7a286079c8f3857
       size: 543855
+  evaluate:
+    cmd: python -m imdb_review_classifier.pipelines.evaluate --path_to_config=configs/baseline.yaml
+    deps:
+    - path: data/split/test.csv
+      md5: 4279918fa2315ab43852446f5b846215
+      size: 13193722
+    - path: imdb_review_classifier/pipelines/evaluate.py
+      md5: 9e9f31ae015a2ec6f7e8f0006dfbafff
+      size: 1540
+    - path: models/count_vectorizer
+      md5: 8d8edbaa77d3179b825580d2b03421ae
+      size: 1760001
+    - path: models/lin_reg
+      md5: 72fe901758140993a7a286079c8f3857
+      size: 543855
+    params:
+      configs/baseline.yaml:
+        evaluate:
+          save:
+            metrics_file: report/metrics/metrics.json
+            confusion_matrix: report/metrics/cm.csv
+        features:
+          vectorizer:
+            analyzer: word
+            min_df: 3
+          save:
+            model_file_name: models/count_vectorizer
+            train_data_file: data/features/x_train
+            target_train_file: data/features/y_train
+            train_data: data/features/train
+        train:
+          save:
+            model_path: models/lin_reg
+    outs:
+    - path: report/metrics/cm.csv
+      md5: d0e37075fa5793c9409cb8ed6597e62c
+      size: 180017
+    - path: report/metrics/metrics.json
+      md5: e679f38839d2e11f103e1daec24ec051
+      size: 20
