@@ -39,7 +39,7 @@ stages:
     outs:
       - models/lin_reg
 
-  evaluate:
+  eval:
     cmd: python -m imdb_review_classifier.pipelines.evaluate --path_to_config=configs/baseline.yaml
     deps:
       - imdb_review_classifier/pipelines/evaluate.py
