@@ -18,7 +18,7 @@ def data_split(config: Dict[Text, Any]) -> None:
 
     # Split in train/test
     df_train, df_test = ms.train_test_split(
-        dataset, test_size=test_size, **config["base"]["seed"]
+        dataset, test_size=test_size, random_state=config["base"]["seed"]
     )
 
     train_dataset_path = Path(train_dataset_path)

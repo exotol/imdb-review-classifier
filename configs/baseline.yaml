@@ -1,5 +1,5 @@
 base:
-  random_state: 100500
+  seed: 100500
 
 data_split:
   raw_data: "data/raw/imdb_dataset.csv"

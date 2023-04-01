@@ -12,7 +12,7 @@ def train_model(config: Dict[Text, Any]) -> None:
     x_train = loaded_data[config["features"]["save"]["train_data_file"]]
     y_train = loaded_data[config["features"]["save"]["target_train_file"]]
 
-    model = lm.LinearRegression(**config["base"]["seed"])
+    model = lm.LinearRegression(random_state=config["base"]["seed"])
 
     model.fit(x_train, y_train)
 
