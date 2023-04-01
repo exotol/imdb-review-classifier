@@ -57,6 +57,11 @@ jupyter:
 	@echo "Запустить Jupyter для исследований"
 	jupyter lab --port 9999
 
+reformat:
+	@echo "Black reformat code"
+	isort .
+	black --line-length 79 .
+
 stage_split:
 	@echo "Добавление разбиения данных"
 	dvc run --force -n data_split \
