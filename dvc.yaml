@@ -29,7 +29,7 @@ stages:
   train:
     cmd: python -m imdb_review_classifier.pipelines.train --path_to_config=configs/baseline.yaml
     deps:
-      - imdb_review_classifier.pipelines.train.py
+      - imdb_review_classifier/pipelines/train.py
       - "data/features/train"
     params:
       - configs/baseline.yaml:
