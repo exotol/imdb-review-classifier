@@ -1,14 +1,14 @@
 schema: '2.0'
 stages:
   data_split:
-    cmd: python imdb_review_classifier/pipelines/data_split.py --path_to_config=configs/baseline.yaml
+    cmd: python -m imdb_review_classifier.pipelines.data_split --path_to_config=configs/baseline.yaml
     deps:
     - path: data/raw/imdb_dataset.csv
       md5: 308443a50e5c993e7b8a1cdb95750026
       size: 66212309
     - path: imdb_review_classifier/pipelines/data_split.py
-      md5: 79e564e72c33b8aa9f7e5f398383f30c
-      size: 1236
+      md5: 71e490535a9201dbdad67757bf68893f
+      size: 1213
     params:
       configs/baseline.yaml:
         base:
@@ -26,14 +26,14 @@ stages:
       md5: e91174c30f08e589561364b57e63f404
       size: 53018604
   features:
-    cmd: python imdb_review_classifier/pipelines/featurize.py --path_to_config=configs/baseline.yaml
+    cmd: python -m imdb_review_classifier.pipelines.featurize --path_to_config=configs/baseline.yaml
     deps:
     - path: data/split/train.csv
       md5: e91174c30f08e589561364b57e63f404
       size: 53018604
     - path: imdb_review_classifier/pipelines/featurize.py
-      md5: 0cce091f325df4291b428e360f260259
-      size: 1323
+      md5: 414d8690b928b8bd2d213cfc925a3e46
+      size: 1419
     params:
       configs/baseline.yaml:
         data_split:
@@ -55,5 +55,5 @@ stages:
       md5: 9a9569ffbd3a5faea3f35357c6d2a6ee
       size: 69368299
     - path: models/count_vectorizer
-      md5: cbdd13af7bb73ba1b750462a3de1bd72
+      md5: eb267badacbf60569eda2fee413182b3
       size: 1760001
