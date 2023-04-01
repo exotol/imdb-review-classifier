@@ -1,5 +1,6 @@
-from typing import Any, Dict, Text
 import json
+from typing import Any, Dict, Text
+
 import click
 import pandas as pd
 import torch
@@ -27,15 +28,14 @@ def eval_metrics(config: Dict[Text, Any]) -> None:
     y_prediction = model.predict(x_data)
     acc_score = metrics.accuracy_score(y_true=target, y_pred=y_prediction)
 
-    json.dump(
-        obj={'accuracy': acc_score},
-        fp=open(path_to_metrics, 'w')
-    )
+    json.dump(obj={"accuracy": acc_score}, fp=open(path_to_metrics, "w"))
 
-    mapping = {i: cls_name for i, cls_name in enumerate(["negative", "positive"])}
-    cmdf = pd.DataFrame(
-        {'actual': target, 'predicted': y_prediction}
-    ).apply(lambda series: series.map(mapping))
+    mapping = {
+        i: cls_name for i, cls_name in enumerate(["negative", "positive"])
+    }
+    cmdf = pd.DataFrame({"actual": target, "predicted": y_prediction}).apply(
+        lambda series: series.map(mapping)
+    )
     cmdf.to_csv(path_to_confusion_matrix, index=False)
 
 
