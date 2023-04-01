@@ -26,7 +26,7 @@ stages:
       md5: e91174c30f08e589561364b57e63f404
       size: 53018604
   features:
-    cmd: python -m imdb_review_classifier.pipelines.featurize --path_to_config=configs/baseline.yaml
+    cmd: python -m imdb_review_classifier.pipelines.featurize  --path_to_config=configs/baseline.yaml
     deps:
     - path: data/split/train.csv
       md5: e91174c30f08e589561364b57e63f404
@@ -55,10 +55,10 @@ stages:
       md5: 972d5e51884a564a513354d7a0718bb6
       size: 69608171
     - path: models/count_vectorizer
-      md5: 8d8edbaa77d3179b825580d2b03421ae
+      md5: a3d91c7a7214d8a167ec90a680c0e9a2
       size: 1760001
   train:
-    cmd: python -m imdb_review_classifier.pipelines.train --path_to_config=configs/baseline.yaml
+    cmd: python -m imdb_review_classifier.pipelines.train  --path_to_config=configs/baseline.yaml
     deps:
     - path: data/features/train
       md5: 972d5e51884a564a513354d7a0718bb6
@@ -136,7 +136,7 @@ stages:
       md5: 85256b75f53749cad74fb3c363c35462
       size: 1533
     - path: models/count_vectorizer
-      md5: 8d8edbaa77d3179b825580d2b03421ae
+      md5: a3d91c7a7214d8a167ec90a680c0e9a2
       size: 1760001
     - path: models/lin_reg
       md5: 72fe901758140993a7a286079c8f3857
@@ -166,3 +166,13 @@ stages:
     - path: report/metrics/metrics.json
       md5: e679f38839d2e11f103e1daec24ec051
       size: 20
+  build-us:
+    cmd: python test.py --thresh 10 --out model-us.hdf5
+    params:
+      configs/baseline.yaml:
+        models.us.filename: model-us.hdf5
+        models.us.threshold: 10
+    outs:
+    - path: model-us.hdf5
+      md5: d3d9446802a44259755d38e6d163e820
+      size: 2

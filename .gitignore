@@ -2,3 +2,4 @@
 .python-version
 notebooks/.ipynb_checkpoints
 __pycache__/
+/model-us.hdf5

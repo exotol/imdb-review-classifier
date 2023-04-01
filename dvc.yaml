@@ -1,66 +1,73 @@
+vars:
+  - configs/baseline.yaml
+
 stages:
 
   data_split:
     desc: Этап разбиения данных на train/test
     cmd: >-
-      python -m imdb_review_classifier.pipelines.data_split 
+      python -m imdb_review_classifier.pipelines.data_split
       --path_to_config=configs/baseline.yaml
     deps:
       - ${data_split.raw_data}
-#      - "data/raw/imdb_dataset.csv"
       - imdb_review_classifier/pipelines/data_split.py
     params:
       - configs/baseline.yaml:
-        - base
-        - data_split
+          - base
+          - data_split
     outs:
       - ${data_split.train_path}
       - ${data_split.test_path}
-#    - data/split/test.csv
-#    - data/split/train.csv
 
   features:
     desc: Этап генерации признаков или обучение векторизаторов/трансформаторов
-    cmd: python -m imdb_review_classifier.pipelines.featurize --path_to_config=configs/baseline.yaml
+    cmd: >-
+      python -m imdb_review_classifier.pipelines.featurize 
+      --path_to_config=configs/baseline.yaml
+
     deps:
-    - data/split/train.csv
-    - imdb_review_classifier/pipelines/featurize.py
+      - ${data_split.train_path}
+      - imdb_review_classifier/pipelines/featurize.py
     params:
       - configs/baseline.yaml:
-        - data_split
-        - features
+          - data_split
+          - features
     outs:
-    - data/features/train
-    - models/count_vectorizer
+      - ${features.save.train_data}
+      - ${features.save.model_file_name}
 
   train:
     desc: Этап тренировки моделей на train данных
-    cmd: python -m imdb_review_classifier.pipelines.train --path_to_config=configs/baseline.yaml
+    cmd: >- 
+      python -m imdb_review_classifier.pipelines.train 
+      --path_to_config=configs/baseline.yaml
     deps:
       - imdb_review_classifier/pipelines/train.py
-      - "data/features/train"
+      - ${features.save.train_data}
     params:
       - configs/baseline.yaml:
           - features
           - base
           - train
     outs:
-      - models/lin_reg
+      - ${train.save.model_path}
 
   eval:
     desc: Вычисление скоров
-    cmd: python -m imdb_review_classifier.pipelines.evaluate --path_to_config=configs/baseline.yaml
+    cmd: >-
+        python -m imdb_review_classifier.pipelines.evaluate
+        --path_to_config=configs/baseline.yaml
     deps:
       - imdb_review_classifier/pipelines/evaluate.py
-      - "data/split/test.csv"
-      - "models/count_vectorizer"
-      - "models/lin_reg"
+      - ${data_split.test_path}
+      - ${features.save.model_file_name}
+      - ${train.save.model_path}
     params:
       - configs/baseline.yaml:
           - features
           - train
           - evaluate
     metrics:
-    - report/metrics/metrics.json
+      - ${evaluate.save.metrics_file}
     plots:
-    - report/metrics/cm.csv
+      - ${evaluate.save.confusion_matrix}
