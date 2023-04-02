@@ -3,8 +3,18 @@ from typing import Any, Dict, Text
 import click
 import torch
 from sklearn import linear_model as lm
+from sklearn import svm
+from sklearn.base import BaseEstimator
 
 from imdb_review_classifier.utils.load_helpers import load_params
+
+
+def create_model(config: Dict[Text, Any]) -> BaseEstimator:
+    if config["train"]["model"]["type"] == "LogisticRegression":
+        model = lm.LogisticRegression(random_state=config["base"]["seed"])
+    elif config["train"]["model"]["type"] == "LinearSVC":
+        model = svm.LinearSVC(random_state=config["base"]["seed"])
+    return model
 
 
 def train_model(config: Dict[Text, Any]) -> None:
@@ -13,7 +23,7 @@ def train_model(config: Dict[Text, Any]) -> None:
     x_train = loaded_data[config["features"]["save"]["train_data_file"]]
     y_train = loaded_data[config["features"]["save"]["target_train_file"]]
 
-    model = lm.LogisticRegression(random_state=config["base"]["seed"])
+    model = create_model(config)
 
     model.fit(x_train, y_train)
 

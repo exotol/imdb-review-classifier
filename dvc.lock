@@ -64,8 +64,8 @@ stages:
       md5: 972d5e51884a564a513354d7a0718bb6
       size: 69608171
     - path: imdb_review_classifier/pipelines/train.py
-      md5: 70773d694a09f63801bf029132de4e07
-      size: 921
+      md5: 4dbf12e7842ab8f87cf7fdf383745a5a
+      size: 1290
     params:
       configs/baseline.yaml:
         base:
@@ -80,12 +80,14 @@ stages:
             target_train_file: data/features/y_train
             train_data: data/features/train
         train:
+          model:
+            type: LinearSVC
           save:
-            model_path: models/lin_reg
+            model_path: models/lin_svc
     outs:
-    - path: models/lin_reg
-      md5: 72fe901758140993a7a286079c8f3857
-      size: 543855
+    - path: models/lin_svc
+      md5: 25c923e4097a68ccb744460bcb69e83c
+      size: 521967
   evaluate:
     cmd: python -m imdb_review_classifier.pipelines.evaluate --path_to_config=configs/baseline.yaml
     deps:
@@ -138,9 +140,9 @@ stages:
     - path: models/count_vectorizer
       md5: a3d91c7a7214d8a167ec90a680c0e9a2
       size: 1760001
-    - path: models/lin_reg
-      md5: 72fe901758140993a7a286079c8f3857
-      size: 543855
+    - path: models/lin_svc
+      md5: 25c923e4097a68ccb744460bcb69e83c
+      size: 521967
     params:
       configs/baseline.yaml:
         evaluate:
@@ -157,14 +159,16 @@ stages:
             target_train_file: data/features/y_train
             train_data: data/features/train
         train:
+          model:
+            type: LinearSVC
           save:
-            model_path: models/lin_reg
+            model_path: models/lin_svc
     outs:
     - path: report/metrics/cm.csv
-      md5: d0e37075fa5793c9409cb8ed6597e62c
+      md5: 7fb765749dcd357c3c456cf3ebde51c0
       size: 180017
     - path: report/metrics/metrics.json
-      md5: e679f38839d2e11f103e1daec24ec051
+      md5: f66056d756f9bdccb54aaa4ad4fb79a3
       size: 20
   build-us:
     cmd: python test.py --thresh 10 --out model-us.hdf5

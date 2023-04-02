@@ -20,8 +20,10 @@ features:
 
 
 train:
+  model:
+    type: 'LinearSVC'
   save:
-    model_path: "models/lin_reg"
+    model_path: "models/lin_svc"
 
 
 evaluate:
