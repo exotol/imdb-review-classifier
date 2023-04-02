@@ -52,3 +52,11 @@ def hello(count, name):
 if __name__ == '__main__':
     hello()
 ```
+
+Config Hydra
+```python
+[hydra]
+    enabled = true
+    config_dir = configs
+    config_name = baseline_hydra.yaml
+```
